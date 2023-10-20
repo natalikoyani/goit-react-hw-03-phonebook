@@ -52,11 +52,13 @@ export class App extends Component {
   render() {
     const { contacts, filter } = this.state;
 
-    const filteredContacts = contacts.filter(contact => {
-      return filter
-        ? contact.name.toLowerCase().includes(filter.toLowerCase())
-        : true;
-    });
+    const filteredContacts = contacts
+      ? contacts.filter(contact => {
+          return filter
+            ? contact.name.toLowerCase().includes(filter.toLowerCase())
+            : true;
+        })
+      : [];
 
     return (
       <div>

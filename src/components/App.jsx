@@ -13,7 +13,9 @@ export class App extends Component {
   componentDidMount() {
     try {
       const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
-      this.setState({ contacts: parsedContacts });
+      if (parsedContacts) {
+        this.setState({ contacts: parsedContacts });
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -49,16 +51,15 @@ export class App extends Component {
     }));
   };
 
-  render() {
+  filterContacts() {
     const { contacts, filter } = this.state;
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  }
 
-    const filteredContacts = contacts
-      ? contacts.filter(contact => {
-          return filter
-            ? contact.name.toLowerCase().includes(filter.toLowerCase())
-            : true;
-        })
-      : [];
+  render() {
+    const filteredContacts = this.filterContacts();
 
     return (
       <div>
